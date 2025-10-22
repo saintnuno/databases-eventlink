@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EventLink - Discover Amazing Events</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="container navbar-content">
+      <div class="navbar-brand">
+        <img class="logo-icon" src="img/logo_main.png" alt="EventLink Logo" />
+        <span class="brand-text">EventLink</span>
+      </div>
+
+      <div class="navbar-links">
+        <a href="#" class="nav-link">Browse Events</a>
+        <a href="#" class="nav-link">Create Event</a>
+        <a href="#" class="nav-link">Help</a>
+      </div>
+
+      <div class="navbar-actions">
+        <button class="btn-ghost">
+          <i data-lucide="user"></i>
+          Sign In
+        </button>
+        <button class="btn-primary">Sign Up</button>
+        <button class="menu-toggle">
+          <i data-lucide="menu"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-overlay"></div>
+    <div class="container hero-content">
+      <h1 class="hero-title">
+        Discover Amazing Events<br />Near You
+      </h1>
+      <p class="hero-subtitle">
+        Find concerts, festivals, workshops, and more. Your next experience is just a click away.
+      </p>
+
+      <div class="search-box">
+        <div class="search-wrapper">
+          <div class="search-input-wrapper">
+            <i data-lucide="search" class="search-icon"></i>
+            <input type="text" class="search-input" placeholder="Search events, artists, venues..." />
+          </div>
+          <button class="btn-search">Search</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Search Filters -->
+  <div class="filters-bar">
+    <div class="container filters-content">
+      <button class="filter-btn">
+        <i data-lucide="calendar"></i>
+        Any Date
+      </button>
+
+      <button class="filter-btn">
+        <i data-lucide="map-pin"></i>
+        All Locations
+      </button>
+
+      <button class="filter-btn">
+        <i data-lucide="tag"></i>
+        All Categories
+      </button>
+
+      <button class="filter-btn filter-more">
+        <i data-lucide="sliders"></i>
+        More Filters
+      </button>
+    </div>
+  </div>
+
+  <!-- Event Grid -->
+  <section class="events-section">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Popular Events</h2>
+          <p class="section-subtitle">Discover the hottest events happening now</p>
+        </div>
+        <button class="btn-view-all">View All</button>
+      </div>
+
+      <div class="events-grid" id="eventsGrid">
+      </div>
+
+      <div class="load-more-wrapper">
+        <button class="btn-load-more">Load More Events</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-column">
+          <div class="footer-brand">
+            <img class="logo-icon" src="img/logo_main.png" alt="EventLink Logo" />
+            <span class="brand-text">EventLink</span>
+          </div>
+          <p class="footer-description">
+            Connecting you with unforgettable experiences. Discover, book, and enjoy the best events around the world.
+          </p>
+          <div class="social-links">
+            <a href="#" class="social-link">
+              <i data-lucide="facebook"></i>
+            </a>
+            <a href="#" class="social-link">
+              <i data-lucide="twitter"></i>
+            </a>
+            <a href="#" class="social-link">
+              <i data-lucide="instagram"></i>
+            </a>
+            <a href="#" class="social-link">
+              <i data-lucide="linkedin"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-column">
+          <h3 class="footer-heading">Explore</h3>
+          <ul class="footer-links">
+            <li><a href="#">Browse Events</a></li>
+            <li><a href="#">Categories</a></li>
+            <li><a href="#">Venues</a></li>
+            <li><a href="#">Organizers</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h3 class="footer-heading">For Organizers</h3>
+          <ul class="footer-links">
+            <li><a href="#">Create Event</a></li>
+            <li><a href="#">Pricing</a></li>
+            <li><a href="#">Resources</a></li>
+            <li><a href="#">Support</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h3 class="footer-heading">Company</h3>
+          <ul class="footer-links">
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Press</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p class="footer-copyright">© 2025 EventLink. All rights reserved.</p>
+        <div class="footer-legal">
+          <a href="/imprint">Imprint</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    lucide.createIcons();
+  </script>
+  <script src="js/main.js"></script>
+</body>
+
+</html>
