@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Maintenance</title>
+  <title>Event Availability</title>
   <link rel="stylesheet" href="../css/style.css" />
 </head>
 <body>
@@ -16,8 +16,8 @@
       </div>
       <div class="navbar-links">
         <a href="../" class="nav-link">Browse Events</a>
-        <a href="#" class="nav-link">Maintenance</a>
-        <a href="../search/" class="nav-link">Search</a>
+        <a href="../maintenance" class="nav-link">Maintenance</a>
+        <a href="#" class="nav-link">Help</a>
       </div>
       <div class="navbar-actions">
         <button class="btn-ghost"><i data-lucide="user"></i>Sign In</button>
@@ -31,30 +31,50 @@
   <section class="hero">
     <div class="hero-overlay"></div>
     <div class="container hero-content">
-      <h1 class="hero-title">Maintenance</h1>
-      <p class="hero-subtitle">Create entities and link relationships.</p>
+      <h1 class="hero-title">Search Events by Availability</h1>
+      <p class="hero-subtitle">Show events with at least K available seats.</p>
     </div>
   </section>
 
-  <!-- Links -->
+  <!-- Form -->
   <section class="events-section">
     <div class="container">
       <div class="section-header">
         <div>
-          <h2 class="section-title">Entities</h2>
-          <p class="section-subtitle">Create records</p>
+          <h2 class="section-title">Search Criteria</h2>
+          <p class="section-subtitle">Please fill out all required fields</p>
         </div>
       </div>
 
-      <ul style="list-style:none; padding:0; display:grid; gap:10px;">
-        <li><a class="nav-link" href="../input/user.php">Add User</a></li>
-        <li><a class="nav-link" href="../input/event.php">Add Event</a></li>
-        <li><a class="nav-link" href="../input/venue.php">Add Venue</a></li>
-        <li><a class="nav-link" href="../input/seat.php">Add Seat</a></li>
-        <li><a class="nav-link" href="../input/ticket.php">Add Ticket</a></li>
-        <li><a class="nav-link" href="../input/order.php">Add Order</a></li>
-        <li><a class="nav-link" href="../input/waitlist.php">Add Waitlist Entry</a></li>
-      </ul>
+      <form action="results/event.php" method="get" style="background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:20px;">
+        <div style="display:grid;grid-template-columns:1fr;gap:16px;">
+          <label>
+            <span style="display:block;font-weight:700;margin-bottom:6px;">Keyword in title</span>
+            <input type="text" name="kw" placeholder="e.g., rock, comedy, finals" class="input" style="width:100%;padding:12px;border:1px solid #e5e7eb;border-radius:10px;">
+          </label>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+            <label>
+     <span style="display:block;font-weight:700;margin-bottom:6px;">Start date (optional)</span>
+              <input type="datetime-local" name="start_at" class="input" style="width:100%;padding:12px;border:1px solid #e5e7eb;border-radius:10px;">
+            </label>
+            <label>
+     <span style="display:block;font-weight:700;margin-bottom:6px;">End date (optional)</span>
+              <input type="datetime-local" name="end_at" class="input" style="width:100%;padding:12px;border:1px solid #e5e7eb;border-radius:10px;">
+            </label>
+          </div>
+
+          <label>
+            <span style="display:block;font-weight:700;margin-bottom:6px;">Minimum available seats *</span>
+            <input type="number" name="K" min="1" value="5" required placeholder="5" class="input" style="width:100%;padding:12px;border:1px solid #e5e7eb;border-radius:10px;">
+          </label>
+        </div>
+
+        <div style="margin-top:16px;display:flex;gap:12px;">
+          <button type="submit" class="btn-primary">Search</button>
+          <a href="../" class="btn-ghost">Back to Home</a>
+        </div>
+      </form>
     </div>
   </section>
 
@@ -104,7 +124,7 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <p class="footer-copyright">© 2025 EventLink. All rights reserved.</p>
+        <p class="footeropyright">© 2025 EventLink. All rights reserved.</p>
         <div class="footer-legal"><a href="../imprint">Imprint</a></div>
       </div>
     </div>

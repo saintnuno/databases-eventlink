@@ -24,7 +24,7 @@ $events = $pdo->query("SELECT e.event_id, e.title, e.start_at, v.name AS venue F
             <div class="navbar-links">
                 <a href="../" class="nav-link">Browse Events</a>
                 <a href="../maintenance" class="nav-link">Maintenance</a>
-                <a href="#" class="nav-link">Help</a>
+                <a href="../search/" class="nav-link">Search</a>
             </div>
             <div class="navbar-actions">
                 <button class="btn-ghost"><i data-lucide="user"></i>Sign In</button>

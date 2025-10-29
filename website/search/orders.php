@@ -1,9 +1,13 @@
+<?php
+require_once __DIR__ . '/../utils/db.php';
+$users = $pdo->query("SELECT user_id, name, email FROM User ORDER BY name ASC")->fetchAll(PDO::FETCH_ASSOC);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Maintenance</title>
+  <title>Search Orders by User</title>
   <link rel="stylesheet" href="../css/style.css" />
 </head>
 <body>
@@ -16,8 +20,8 @@
       </div>
       <div class="navbar-links">
         <a href="../" class="nav-link">Browse Events</a>
-        <a href="#" class="nav-link">Maintenance</a>
-        <a href="../search/" class="nav-link">Search</a>
+        <a href="../maintenance" class="nav-link">Maintenance</a>
+        <a href="./" class="nav-link">Search</a>
       </div>
       <div class="navbar-actions">
         <button class="btn-ghost"><i data-lucide="user"></i>Sign In</button>
@@ -31,30 +35,41 @@
   <section class="hero">
     <div class="hero-overlay"></div>
     <div class="container hero-content">
-      <h1 class="hero-title">Maintenance</h1>
-      <p class="hero-subtitle">Create entities and link relationships.</p>
+      <h1 class="hero-title">Orders by User</h1>
+      <p class="hero-subtitle">Select a user to see their orders with ticket counts and venues</p>
     </div>
   </section>
 
-  <!-- Links -->
+  <!-- Form -->
   <section class="events-section">
     <div class="container">
       <div class="section-header">
         <div>
-          <h2 class="section-title">Entities</h2>
-          <p class="section-subtitle">Create records</p>
+          <h2 class="section-title">Search Criteria</h2>
+          <p class="section-subtitle">Choose a user</p>
         </div>
       </div>
 
-      <ul style="list-style:none; padding:0; display:grid; gap:10px;">
-        <li><a class="nav-link" href="../input/user.php">Add User</a></li>
-        <li><a class="nav-link" href="../input/event.php">Add Event</a></li>
-        <li><a class="nav-link" href="../input/venue.php">Add Venue</a></li>
-        <li><a class="nav-link" href="../input/seat.php">Add Seat</a></li>
-        <li><a class="nav-link" href="../input/ticket.php">Add Ticket</a></li>
-        <li><a class="nav-link" href="../input/order.php">Add Order</a></li>
-        <li><a class="nav-link" href="../input/waitlist.php">Add Waitlist Entry</a></li>
-      </ul>
+      <form action="results/orders.php" method="get" style="background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:20px;">
+        <div style="display:grid;grid-template-columns:1fr;gap:16px;">
+          <label>
+            <span style="display:block;font-weight:700;margin-bottom:6px;">User *</span>
+            <select name="user_id" required class="input" style="width:100%;padding:12px;border:1px solid #e5e7eb;border-radius:10px;">
+              <option value="">Select a user…</option>
+              <?php foreach ($users as $u): ?>
+                <option value="<?php echo (int)$u['user_id']; ?>">
+                  <?php echo htmlspecialchars($u['name'].' — '.$u['email'], ENT_QUOTES, 'UTF-8'); ?>
+                </option>
+              <?php endforeach; ?>
+            </select>
+          </label>
+        </div>
+
+        <div style="margin-top:16px;display:flex;gap:12px;">
+          <button type="submit" class="btn-primary">Search</button>
+          <a href="../" class="btn-ghost">Back to Home</a>
+        </div>
+      </form>
     </div>
   </section>
 
@@ -104,7 +119,7 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <p class="footer-copyright">© 2025 EventLink. All rights reserved.</p>
+        <p class="footeropyright">© 2025 EventLink. All rights reserved.</p>
         <div class="footer-legal"><a href="../imprint">Imprint</a></div>
       </div>
     </div>

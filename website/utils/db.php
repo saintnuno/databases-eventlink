@@ -2,7 +2,7 @@
 $DB_HOST = 'localhost';
 $DB_NAME = 'db_name';
 $DB_USER = 'user';
-$DB_PASS = 'pass';
+$DB_PASS = 'password';
 $DB_DSN  = "mysql:host=$DB_HOST;dbname=$DB_NAME;charset=utf8mb4";
 
 $options = [
