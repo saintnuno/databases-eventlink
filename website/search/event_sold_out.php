@@ -1,10 +1,9 @@
-<?php require_once __DIR__ . '/../utils/db.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Category Summary</title>
+  <title>Sold-out Events + Waitlist</title>
   <link rel="stylesheet" href="../css/style.css" />
 </head>
 <body>
@@ -18,7 +17,7 @@
       <div class="navbar-links">
         <a href="../" class="nav-link">Browse Events</a>
         <a href="../maintenance" class="nav-link">Maintenance</a>
-        <a href="../search/" class="nav-link">Search</a>
+        <a href="./" class="nav-link">Search</a>
       </div>
       <div class="navbar-actions">
         <button class="btn-ghost"><i data-lucide="user"></i>Sign In</button>
@@ -32,8 +31,8 @@
   <section class="hero">
     <div class="hero-overlay"></div>
     <div class="container hero-content">
-      <h1 class="hero-title">Category Summary</h1>
-      <p class="hero-subtitle">Group events by category</p>
+      <h1 class="hero-title">Sold-out Events</h1>
+      <p class="hero-subtitle">See waitlist sizes for events with zero available tickets</p>
     </div>
   </section>
 
@@ -43,24 +42,13 @@
       <div class="section-header">
         <div>
           <h2 class="section-title">Search Criteria</h2>
-          <p class="section-subtitle">Leave empty to use 2025</p>
+          <p class="section-subtitle">This query has no input parameters</p>
         </div>
       </div>
 
-      <form action="results/category.php" method="get" style="background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:20px;">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-          <label>
-            <span style="display:block;font-weight:700;margin-bottom:6px;">Start date</span>
-            <input type="datetime-local" name="start_at" class="input" style="width:100%;padding:12px;border:1px solid #e5e7eb;border-radius:10px;">
-          </label>
-          <label>
-            <span style="display:block;font-weight:700;margin-bottom:6px;">End date</span>
-            <input type="datetime-local" name="end_at" class="input" style="width:100%;padding:12px;border:1px solid #e5e7eb;border-radius:10px;">
-          </label>
-        </div>
-
-        <div style="margin-top:16px;display:flex;gap:12px;">
-          <button type="submit" class="btn-primary">Run Summary</button>
+      <form action="results/event_sold_out.php" method="get" style="background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:20px;">
+        <div style="display:flex;gap:12px;">
+          <button type="submit" class="btn-primary">Show Sold-out Events</button>
           <a href="../" class="btn-ghost">Back to Home</a>
         </div>
       </form>

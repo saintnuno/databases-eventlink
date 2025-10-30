@@ -1,32 +1,23 @@
 <?php
 require_once __DIR__ . '/../../utils/db.php';
 
-$start = trim($_GET['start_at'] ?? '');
-$end   = trim($_GET['end_at'] ?? '');
-
-if ($start === '') {
-  $start = '2025-01-01 00:00:00';
-}
-if ($end === '') {
-  $end = '2025-12-31 23:59:59';
-}
-
-$stmt = $pdo->prepare("
-  SELECT  e.category,
-          COUNT(DISTINCT e.event_id) AS events_count,
-          COUNT(t.ticket_id)         AS tickets_created,
-          SUM(CASE WHEN t.status = 'TICKETED' THEN 1 ELSE 0 END) AS tickets_sold
+$stmt = $pdo->query("
+  SELECT  e.event_id, e.title, e.start_at,
+          COUNT(t.ticket_id) AS total_tickets,
+          SUM(CASE WHEN t.status = 'AVAILABLE' THEN 1 ELSE 0 END) AS available_tickets,
+          COALESCE(w.wl_size, 0) AS waitlist_size
   FROM Event e
-  LEFT JOIN Ticket t ON t.event_id = e.event_id
-  WHERE e.start_at BETWEEN :start_at AND :end_at
-  GROUP BY e.category
-  HAVING events_count > 0
-  ORDER BY tickets_sold DESC, e.category
+  JOIN Ticket t ON t.event_id = e.event_id
+  LEFT JOIN (
+    SELECT event_id, COUNT(*) AS wl_size
+    FROM Waitlist
+    WHERE status IN ('ACTIVE','OFFERED')
+    GROUP BY event_id
+  ) w ON w.event_id = e.event_id
+  GROUP BY e.event_id, e.title, e.start_at, w.wl_size
+  HAVING available_tickets = 0
+  ORDER BY e.start_at;
 ");
-$stmt->execute([
-  ':start_at' => $start,
-  ':end_at'   => $end,
-]);
 $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
@@ -34,7 +25,7 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Category Summary — Results</title>
+  <title>EventLink — Sold-out Results</title>
   <link rel="stylesheet" href="../../css/style.css" />
 </head>
 <body>
@@ -48,7 +39,7 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
       <div class="navbar-links">
         <a href="../../" class="nav-link">Browse Events</a>
         <a href="../../maintenance" class="nav-link">Maintenance</a>
-        <a href="../../search/" class="nav-link">Search</a>
+        <a href="../" class="nav-link">Search</a>
       </div>
       <div class="navbar-actions">
         <button class="btn-ghost"><i data-lucide="user"></i>Sign In</button>
@@ -62,8 +53,8 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <section class="hero">
     <div class="hero-overlay"></div>
     <div class="container hero-content">
-      <h1 class="hero-title">Category Summary</h1>
-      <p class="hero-subtitle">Results for <?php echo htmlspecialchars($start, ENT_QUOTES, 'UTF-8'); ?> to <?php echo htmlspecialchars($end, ENT_QUOTES, 'UTF-8'); ?></p>
+      <h1 class="hero-title">Sold-out Events</h1>
+      <p class="hero-subtitle">Result list</p>
     </div>
   </section>
 
@@ -72,28 +63,29 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <div class="container">
       <div class="section-header">
         <div>
-          <h2 class="section-title">Results</h2>
-          <p class="section-subtitle">Showing <?php echo count($rows); ?> category row(s)</p>
+          <h2 class="section-title">Result List</h2>
+          <p class="section-subtitle">Showing <?php echo count($rows); ?> result(s)</p>
         </div>
-        <a class="btn-view-all" href="../category.php">New Search</a>
+        <a class="btn-view-all" href="../event_sold_out.php">New Search</a>
       </div>
 
       <div class="events-grid">
         <?php foreach ($rows as $r): ?>
           <div class="event-card" style="background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:8px;">
-            <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;">
-              <h3 style="font-weight:800;font-size:1.1rem;"><?php echo htmlspecialchars($r['category'] ?? 'Uncategorized', ENT_QUOTES, 'UTF-8'); ?></h3>
-              <span style="background:#111;color:#ffd8bc;border-radius:999px;padding:4px 10px;font-size:.8rem;">
-                Sold: <?php echo (int)$r['tickets_sold']; ?>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
+              <h3 style="font-weight:800;font-size:1.1rem;"><?php echo htmlspecialchars($r['title'], ENT_QUOTES, 'UTF-8'); ?></h3>
+              <span style="font-size:.85rem;background:#111;color:#ffd8bc;padding:4px 8px;border-radius:999px;">
+                Waitlist: <?php echo (int)$r['waitlist_size']; ?>
               </span>
             </div>
             <div style="color:#374151;">
-              <div><strong>Events:</strong> <?php echo (int)$r['events_count']; ?></div>
-              <div><strong>Tickets created:</strong> <?php echo (int)$r['tickets_created']; ?></div>
+              <div><strong>Starts:</strong> <?php echo htmlspecialchars($r['start_at'], ENT_QUOTES, 'UTF-8'); ?></div>
+              <div><strong>Total tickets:</strong> <?php echo (int)$r['total_tickets']; ?></div>
+              <div><strong>Available:</strong> <?php echo (int)$r['available_tickets']; ?></div>
             </div>
             <div style="margin-top:8px;">
-              <a class="btn-primary" href="../details/category.php?category=<?php echo urlencode($r['category'] ?? ''); ?>&start_at=<?php echo urlencode($start); ?>&end_at=<?php echo urlencode($end); ?>">
-                View details
+              <a class="btn-primary" href="../details/event_sold_out.php?event_id=<?php echo (int)$r['event_id']; ?>">
+                View event detail
               </a>
             </div>
           </div>
@@ -102,7 +94,7 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
       <?php if (count($rows) === 0): ?>
         <div style="margin-top:16px;background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:16px;">
-          No categories found in this period.
+          No sold-out events found.
         </div>
       <?php endif; ?>
     </div>
