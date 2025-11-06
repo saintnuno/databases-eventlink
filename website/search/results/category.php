@@ -1,5 +1,8 @@
 <?php
-require_once __DIR__ . '/../../utils/db.php';
+require_once __DIR__ . '/../../utils/paths.php';
+require_once UTILS_DIR . '/auth.php';
+require_once UTILS_DIR . '/db.php';
+require_login();
 
 $start = trim($_GET['start_at'] ?? '');
 $end   = trim($_GET['end_at'] ?? '');
@@ -28,6 +31,9 @@ $stmt->execute([
   ':end_at'   => $end,
 ]);
 $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$basePrefix = '../..';
+$activeNav = 'search';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,25 +44,7 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <link rel="stylesheet" href="../../css/style.css" />
 </head>
 <body>
-  <!-- Navbar -->
-  <nav class="navbar">
-    <div class="container navbar-content">
-      <div class="navbar-brand">
-        <img class="logo-icon" src="../../img/logo_main.png" alt="EventLink Logo" />
-        <span class="brand-text">EventLink</span>
-      </div>
-      <div class="navbar-links">
-        <a href="../../" class="nav-link">Browse Events</a>
-        <a href="../../maintenance" class="nav-link">Maintenance</a>
-        <a href="../../search/" class="nav-link">Search</a>
-      </div>
-      <div class="navbar-actions">
-        <button class="btn-ghost"><i data-lucide="user"></i>Sign In</button>
-        <button class="btn-primary">Sign Up</button>
-        <button class="menu-toggle"><i data-lucide="menu"></i></button>
-      </div>
-    </div>
-  </nav>
+  <?php require_once LAYOUT_DIR . '/navbar.php'; ?>
 
   <!-- Hero -->
   <section class="hero">

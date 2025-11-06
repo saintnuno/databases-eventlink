@@ -1,5 +1,8 @@
 <?php
-require_once __DIR__ . '/../utils/db.php';
+require_once __DIR__ . '/../utils/paths.php';
+require_once UTILS_DIR . '/db.php';
+require_once UTILS_DIR . '/auth.php';
+require_login();
 
 $eventId = (int)($_POST['event_id'] ?? 0);
 $seatId  = (int)($_POST['seat_id'] ?? 0);

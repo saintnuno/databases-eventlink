@@ -1,40 +1,23 @@
+<?php
+require_once __DIR__ . '/../utils/paths.php';
+require_once UTILS_DIR . '/auth.php';
+// Note: No require_login() here - imprint page is public (legal requirement)
+
+$basePrefix = '..';
+$activeNav = '';
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>EventLink - Discover Amazing Events</title>
+	<title>EventLink - Imprint</title>
 	<link rel="stylesheet" href="../css/style.css">
 </head>
 
 <body>
-	<!-- Navbar -->
-	<nav class="navbar">
-		<div class="container navbar-content">
-			<div class="navbar-brand">
-				<img class="logo-icon" src="../img/logo_main.png" alt="EventLink Logo" />
-				<span class="brand-text">EventLink</span>
-			</div>
-
-			<div class="navbar-links">
-				<a href="../" class="nav-link">Browse Events</a>
-				<a href="../maintenance" class="nav-link">Maintenance</a>
-				<a href="../search/" class="nav-link">Search</a>
-			</div>
-
-			<div class="navbar-actions">
-				<button class="btn-ghost">
-					<i data-lucide="user"></i>
-					Sign In
-				</button>
-				<button class="btn-primary">Sign Up</button>
-				<button class="menu-toggle">
-					<i data-lucide="menu"></i>
-				</button>
-			</div>
-		</div>
-	</nav>
+	<?php require_once LAYOUT_DIR . '/navbar.php'; ?>
 
 	<section class="hero">
 		<div class="hero-overlay"></div>
