@@ -1,10 +1,9 @@
 <?php
-require_once __DIR__ . '/../utils/paths.php';
-require_once UTILS_DIR . '/db.php';
+require_once __DIR__ . '/utils/paths.php';
 require_once UTILS_DIR . '/auth.php';
 require_login();
 
-$basePrefix = '..';
+$basePrefix = '.';
 $activeNav = 'search';
 ?>
 <!DOCTYPE html>
@@ -12,71 +11,67 @@ $activeNav = 'search';
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Event Availability</title>
-  <link rel="stylesheet" href="../css/style.css" />
+  <title>Autocomplete Server Demo</title>
+  <link rel="stylesheet" href="./css/style.css" />
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/smoothness/jquery-ui.css">
 </head>
 <body>
   <?php require_once LAYOUT_DIR . '/navbar.php'; ?>
 
-  <!-- Hero -->
   <section class="hero">
     <div class="hero-overlay"></div>
     <div class="container hero-content">
-      <h1 class="hero-title">Search Events by Availability</h1>
-      <p class="hero-subtitle">Show events with at least K available seats.</p>
+      <h1 class="hero-title">Autocomplete Server Demo</h1>
+      <p class="hero-subtitle">Test jQuery UI autocomplete with server-side data.</p>
     </div>
   </section>
 
-  <!-- Form -->
   <section class="events-section">
     <div class="container">
       <div class="section-header">
         <div>
-          <h2 class="section-title">Search Criteria</h2>
-          <p class="section-subtitle">Please fill out all required fields</p>
+          <h2 class="section-title">Search Demo</h2>
+          <p class="section-subtitle">Type to see autocomplete suggestions from database</p>
         </div>
       </div>
 
-      <form action="results/event.php" method="get" style="background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:20px;">
+      <div style="background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:20px;">
         <div style="display:grid;grid-template-columns:1fr;gap:16px;">
           <label>
-            <span style="display:block;font-weight:700;margin-bottom:6px;">Keyword in title</span>
-            <input type="text" name="kw" placeholder="e.g., rock, comedy, finals" class="input" style="width:100%;padding:12px;border:1px solid #e5e7eb;border-radius:10px;">
+            <span style="display:block;font-weight:700;margin-bottom:6px;">Search Events</span>
+            <input type="text" id="event-search" placeholder="e.g., rock, concert, sports" class="input" style="width:100%;padding:12px;border:1px solid #e5e7eb;border-radius:10px;">
           </label>
-
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-            <label>
-     <span style="display:block;font-weight:700;margin-bottom:6px;">Start date (optional)</span>
-              <input type="datetime-local" name="start_at" class="input" style="width:100%;padding:12px;border:1px solid #e5e7eb;border-radius:10px;">
-            </label>
-            <label>
-     <span style="display:block;font-weight:700;margin-bottom:6px;">End date (optional)</span>
-              <input type="datetime-local" name="end_at" class="input" style="width:100%;padding:12px;border:1px solid #e5e7eb;border-radius:10px;">
-            </label>
-          </div>
+          
+          <label>
+            <span style="display:block;font-weight:700;margin-bottom:6px;">Search Categories</span>
+            <input type="text" id="category-search" placeholder="e.g., music, theatre" class="input" style="width:100%;padding:12px;border:1px solid #e5e7eb;border-radius:10px;">
+          </label>
 
           <label>
-            <span style="display:block;font-weight:700;margin-bottom:6px;">Minimum available seats *</span>
-            <input type="number" name="K" min="1" value="5" required placeholder="5" class="input" style="width:100%;padding:12px;border:1px solid #e5e7eb;border-radius:10px;">
+            <span style="display:block;font-weight:700;margin-bottom:6px;">Search Venues</span>
+            <input type="text" id="venue-search" placeholder="e.g., stadium, arena" class="input" style="width:100%;padding:12px;border:1px solid #e5e7eb;border-radius:10px;">
           </label>
+
+          <div id="result" style="margin-top:16px;padding:12px;background:#f9fafb;border-radius:8px;min-height:50px;">
+            <p style="color:#6b7280;">Selected value will appear here</p>
+          </div>
         </div>
 
         <div style="margin-top:16px;display:flex;gap:12px;">
-          <button type="submit" class="btn-primary">Search</button>
-          <a href="../" class="btn-ghost">Back to Home</a>
+          <a href="./autocomplete_demo.php" class="btn-ghost">Static Demo</a>
+          <a href="./autocomplete_dynamic.php" class="btn-primary">Dynamic Demo (Bonus)</a>
+          <a href="./search/" class="btn-ghost">Go to Search</a>
         </div>
-      </form>
+      </div>
     </div>
   </section>
 
-  <!-- Footer -->
   <footer class="footer">
     <div class="container">
       <div class="footer-grid">
         <div class="footer-column">
           <div class="footer-brand">
-            <img class="logo-icon" src="../img/logo_main.png" alt="EventLink Logo" />
+            <img class="logo-icon" src="./img/logo_main.png" alt="EventLink Logo" />
             <span class="brand-text">EventLink</span>
           </div>
           <p class="footer-description">Connecting you with unforgettable experiences.</p>
@@ -116,8 +111,8 @@ $activeNav = 'search';
         </div>
       </div>
       <div class="footer-bottom">
-        <p class="footeropyright">© 2025 EventLink. All rights reserved.</p>
-        <div class="footer-legal"><a href="../imprint">Imprint</a></div>
+        <p class="footer-copyright">© 2025 EventLink. All rights reserved.</p>
+        <div class="footer-legal"><a href="./imprint">Imprint</a></div>
       </div>
     </div>
   </footer>
@@ -127,13 +122,31 @@ $activeNav = 'search';
   
   <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
   <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>
-  <script src="../js/autocomplete.js"></script>
   
   <script>
     $(document).ready(function() {
-      EventLinkAutocomplete.init('input[name="kw"]', 'events', {
-        minLength: 2,
-        delay: 300
+      $("#event-search").autocomplete({
+        source: "./utils/autocomplete_api.php?type=events",
+        minLength: 1,
+        select: function(event, ui) {
+          $("#result").html("<p style='color:#059669;font-weight:600;'>You selected: " + ui.item.value + " (Type: " + ui.item.type + ")</p>");
+        }
+      });
+      
+      $("#category-search").autocomplete({
+        source: "./utils/autocomplete_api.php?type=categories",
+        minLength: 1,
+        select: function(event, ui) {
+          $("#result").html("<p style='color:#059669;font-weight:600;'>You selected category: " + ui.item.value + "</p>");
+        }
+      });
+      
+      $("#venue-search").autocomplete({
+        source: "./utils/autocomplete_api.php?type=venues",
+        minLength: 1,
+        select: function(event, ui) {
+          $("#result").html("<p style='color:#059669;font-weight:600;'>You selected venue: " + ui.item.value + "</p>");
+        }
       });
     });
   </script>

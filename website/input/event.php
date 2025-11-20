@@ -17,6 +17,7 @@ $activeNav = 'maintenance';
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Add Events</title>
     <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/smoothness/jquery-ui.css">
 </head>
 
 <body>
@@ -161,6 +162,19 @@ $activeNav = 'maintenance';
 
     <script src="https://unpkg.com/lucide@latest"></script>
     <script>lucide.createIcons();</script>
+    
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>
+    <script src="../js/autocomplete.js"></script>
+    
+    <script>
+        $(document).ready(function() {
+            EventLinkAutocomplete.init('input[name="category"]', 'categories', {
+                minLength: 1,
+                delay: 300
+            });
+        });
+    </script>
 </body>
 
 </html>

@@ -14,6 +14,7 @@ $activeNav = 'search';
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Category Summary</title>
   <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/smoothness/jquery-ui.css">
 </head>
 <body>
   <?php require_once LAYOUT_DIR . '/navbar.php'; ?>
@@ -112,5 +113,9 @@ $activeNav = 'search';
 
   <script src="https://unpkg.com/lucide@latest"></script>
   <script>lucide.createIcons();</script>
+  
+  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>
+  <script src="../js/autocomplete.js"></script>
 </body>
 </html>
