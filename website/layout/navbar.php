@@ -9,6 +9,7 @@ if (!isset($activeNav)) {
 $homeLink = ($activeNav === 'home') ? '#' : "{$basePrefix}/";
 $maintenanceLink = ($activeNav === 'maintenance') ? '#' : "{$basePrefix}/maintenance";
 $searchLink = ($activeNav === 'search') ? '#' : "{$basePrefix}/search/";
+$locationLink = ($activeNav === 'location') ? '#' : "{$basePrefix}/location.php";
 $loginLink = "{$basePrefix}/login/";
 $logoutLink = "{$basePrefix}/utils/logout.php";
 ?>
@@ -22,6 +23,7 @@ $logoutLink = "{$basePrefix}/utils/logout.php";
             <a href="<?php echo $homeLink; ?>" class="nav-link">Browse Events</a>
             <a href="<?php echo $maintenanceLink; ?>" class="nav-link">Maintenance</a>
             <a href="<?php echo $searchLink; ?>" class="nav-link">Search</a>
+            <a href="<?php echo $locationLink; ?>" class="nav-link">Location</a>
         </div>
         <div class="navbar-actions">
             <?php if (is_user_logged_in()): ?>
